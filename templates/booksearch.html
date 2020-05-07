@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block heading %} {% endblock%}
+{% block body %}
+
+
+<form action="{{ url_for('booksearch') }}" method="post">
+   <div class="form-group">
+       <h2>Search the books by </h2> <select name="criteria" class="form-control">
+       <option value="Title">Title</option>
+       <option value="Author">Author</option>
+       <option value="ISBN">ISBN</option>
+   </select>
+   </div>
+    <div class="form-group">
+        <input type="text" name="booksearch" class="form-control" placeholder="Search books"/>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">search</button>
+   </div>
+    <div class="form-group">
+        {% if searchresults %}
+        <h1>Search Details:</h1>
+        {% for res in searchresults %}
+            <div class="form-group">
+                ISBN: {{res.isbn}}<br/>
+                Title: <a href="{{ url_for('bookdetail', bookid=res.bookid) }}">{{res.title}}</a><br/>
+                Author: {{res.author}}<br/>
+
+            </div>
+        {% else %}
+        <h3>No result found..</h3>
+        {% endfor %}
+        {% endif %}
+    </div>
+</form>
+
+{% endblock%}

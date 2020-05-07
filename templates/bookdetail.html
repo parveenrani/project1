@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block heading %} {% endblock%}
+{% block body %}
+
+
+    <div class="form-group">
+        <h2>Book Detail</h2>
+        {% if results %}
+            <div class="form-group">
+                <b>Title</b>: {{results.title}}<br/>
+                <b>Written by</b>: {{results.author}}<br/>
+                <b>Published Year</b>:{{results.published_year}}<br>
+                <b>ISBN</b>: {{results.isbn}}
+            </div>
+
+
+        <div class="form-group">
+            <h3>Reviews:</h3>
+            {% for result in reviewresult%}
+            <b>Review:{{result.review}} <br/>
+            Rating: {% for r in range(0,result.rating) %}
+                *
+            {% endfor %}
+            Written by:{{result.username}}</b><br/><br>
+            {% else %}
+                No reviews<br/>
+            {% endfor %}
+
+             <b>Reviews count from Goodreads</b> {{lstgoodreads[0]}}<br/>
+             <b>Average rating from Goodreads</b> {{lstgoodreads[1]}}
+        </div>
+        {% else %}
+            Not found
+        {% endif %}
+    </div>
+{% if user_count==0 %}
+<form method="post" action="{{ url_for('bookdetail',bookid=results.bookid)}}">
+<div class="form-group">
+    Write your reviews <textarea name="review" rows="10" cols="30"></textarea>
+    Rating: <select name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</div>
+</form>
+{% else %}
+    <h4>You already posted reviews for this book...</h4>
+{% endif %}
+{% endblock%}

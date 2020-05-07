@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+
+<ul class="nav justify-content-end">
+    {% if 'username' in session %}
+          <li class="nav-item">
+            <p class="nav-link">Hi, {{session["username"]}}</p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/booksearch">Book Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/logout">Logout</a>
+          </li>
+     {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+    {% endif %}
+</ul>
+
+     {% include "message.html" %}
+
+ <main role="main" class="container">
+        <div>
+            <h1>
+            {% block heading %}{% endblock %}
+            </h1>
+        </div>
+        <div>
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+</body>
+</html>
